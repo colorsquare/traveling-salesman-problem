@@ -1,0 +1,12 @@
+# python
+venv
+__pycache__
+
+# data
+*.csv
+
+# misc
+.DS_Store
+.vscode
+.env
+
