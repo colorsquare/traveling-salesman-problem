@@ -3,7 +3,7 @@ class TSP:
 
     Note:
         Number of cities in an instance is `n`.
-        Cities does not have names. Instead, they are referred by indexes in a list.
+        Cities do not have names. Instead, they are referred by indexes in a list.
 
     Attributes:
         locations (list[tuple[int]]): Each city location is represented as tuple[int], an euclidien coordinate (x, y).
