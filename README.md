@@ -23,3 +23,22 @@ $ python3 main.py                   # default: genetic-algorithm with rl11849
 $ python3 main.py 2opt a280         # receives two positional arguments of method and data
 ```
 
+## Folder Structure
+
+```sh
+traveling-salesman-problem
+├── README.md
+├── .gitignore
+├── data/
+│   ├── a280.tsp
+│   ├── rl11849.tsp
+│   └── ...
+├── heuristics/
+│   ├── genetic_programming.py
+│   ├── greedy_search.py
+│   ├── two_opt.py
+│   └── ...
+├── tsp.py
+└── main.py
+```
+
