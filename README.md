@@ -42,3 +42,10 @@ traveling-salesman-problem
 └── main.py
 ```
 
+## Data and testings
+
+### Raw dataset
+
+The basic dataset used for testings in this problem is [MP-TESTDATA](http://elib.zib.de/pub/mp-testdata/tsp/tsplib/tsp/index.html). The numbers in file name denotes the number of cities.
+
+To add new test data, refer to [test.tsp](https://github.com/colorsquare/traveling-salesman-problem/blob/main/data/test.tsp) for required format.
