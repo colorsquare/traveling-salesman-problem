@@ -1,5 +1,6 @@
 from tsp import TSP
 
+
 def main():
     # TODO
     #  - parse
@@ -7,6 +8,6 @@ def main():
     #  - execute solver
     pass
 
+
 if __name__ == "__main__":
     main()
-
