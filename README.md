@@ -9,7 +9,7 @@ More information about traveling salesman problem can be found [here](https://en
 
 ## About the Code
 
-Classical optimization algorithms such as greedy search are not effective due to high computational cost in large problem instances of traveling salesman problem. There's currently no known single best algorithm, and instead, various stochastic optimizations are proposed. These solutions does not aim for the '*answer*', but shows sufficient level of optimization with great efficiency.
+Classical optimization algorithms such as greedy search are not effective due to high computational cost in large problem instances of traveling salesman problem. There's currently no known single best algorithm, and instead, various stochastic optimizations are proposed. These solutions does not aim for the 'answer', but shows sufficient level of optimization with great efficiency.
 
 The classic and meta-heuristic approaches are as follows:
 
