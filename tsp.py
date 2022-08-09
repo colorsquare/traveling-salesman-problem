@@ -79,7 +79,9 @@ class TSP:
         Returns:
             route (list[int])
         """
-        return random.shuffle(list(range(len(self._locations))))
+        route = list(range(len(self._locations)))
+        random.shuffle(route)
+        return route
 
     def update_route(self, new_route):
         self.route = new_route
