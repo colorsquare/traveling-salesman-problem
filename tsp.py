@@ -21,7 +21,7 @@ class TSP:
         locations (list[tuple[int]]): Each city location is represented as a tuple[int],
             an euclidien coordinate (x, y).
         distances (list[list[int]]): Pre-calculated distances between all cities.
-            n x n matrix cut in half.
+            n x n matrix cut in half, a bottom-left triangle.
         route (list[int]): List of cities, in order of the salesman's travel.
         total_distance (int): Cumulative distance of the route.
     """
@@ -91,6 +91,11 @@ class TSP:
         self.total_distance = self.calculate_total_distance()
 
     def calculate_total_distance(self):
+        """Add all distances that salesman will travel.
+
+        Attribute 'distances' was cut in half since a distance between two cities are equal
+        both ways. max(), min() is used to adjust index input, due to the halved n x n matrix.
+        """
         total_distance = 0
 
         prev_city = self.route[0]
