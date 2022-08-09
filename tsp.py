@@ -2,6 +2,9 @@
 Traveling Salesman Problem (TSP)
 
 Built into python class with some helper functions.
+
+To run doctests,
+$ python3 -m doctest -v tsp.py
 """
 import math
 import random
@@ -24,8 +27,8 @@ class TSP:
     """
 
     def __init__(self, data):
-        self._locations = self._build_locations(data)
-        self._distances = self._build_distances()
+        self.locations = self._build_locations(data)
+        self.distances = self._build_distances()
 
         self.route = self.create_random_route()
         self.total_distance = self.calculate_total_distance()
@@ -63,12 +66,12 @@ class TSP:
         distances = [
             [
                 math.hypot(
-                    self._locations[i][0] - self._locations[j][0],
-                    self._locations[i][1] - self._locations[j][1],
+                    self.locations[i][0] - self.locations[j][0],
+                    self.locations[i][1] - self.locations[j][1],
                 )
                 for j in range(i)
             ]
-            for i in range(len(self._locations))
+            for i in range(len(self.locations))
         ]
 
         return distances
@@ -79,7 +82,7 @@ class TSP:
         Returns:
             route (list[int])
         """
-        route = list(range(len(self._locations)))
+        route = list(range(len(self.locations)))
         random.shuffle(route)
         return route
 
@@ -92,12 +95,25 @@ class TSP:
 
         prev_city = self.route[0]
         for city in self.route[1:]:
-            total_distance += self._distances[max(city, prev_city)][
-                min(city, prev_city)
-            ]
+            total_distance += self.distances[max(city, prev_city)][min(city, prev_city)]
             prev_city = city
 
         first, last = self.route[0], self.route[-1]
-        total_distance += self._distances[max(first, last)][min(first, last)]
+        total_distance += self.distances[max(first, last)][min(first, last)]
 
         return total_distance
+
+
+# Tests
+
+
+def test_tsp(data):
+    """
+    Examples:
+        >>> test_tsp('test')
+        [(0.0, 0.0), (0.0, 4.0), (3.0, 0.0), (3.0, 4.0)]
+        [[], [4.0], [3.0, 5.0], [5.0, 3.0, 4.0]]
+    """
+    tsp = TSP(data)
+    print(tsp.locations)
+    print(tsp.distances)
