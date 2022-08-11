@@ -31,7 +31,7 @@ class TSP:
         self.distances = self._build_distances()
 
         self.route = self.create_random_route()
-        self.total_distance = self.calculate_total_distance()
+        self.total_distance = self.calculate_total_distance(self.route)
 
     def _build_locations(self, data):
         """Read data and build attribute 'locations'.
@@ -88,22 +88,25 @@ class TSP:
 
     def update_route(self, new_route):
         self.route = new_route
-        self.total_distance = self.calculate_total_distance()
+        self.total_distance = self.calculate_total_distance(self.route)
 
-    def calculate_total_distance(self):
+    def calculate_total_distance(self, route):
         """Add all distances that salesman will travel.
 
         Attribute 'distances' was cut in half since a distance between two cities are equal
         both ways. max(), min() is used to adjust index input, due to the halved n x n matrix.
+
+        Args:
+            route (list[int]): Description equal to self.route
         """
         total_distance = 0
 
-        prev_city = self.route[0]
-        for city in self.route[1:]:
+        prev_city = route[0]
+        for city in route[1:]:
             total_distance += self.distances[max(city, prev_city)][min(city, prev_city)]
             prev_city = city
 
-        first, last = self.route[0], self.route[-1]
+        first, last = route[0], route[-1]
         total_distance += self.distances[max(first, last)][min(first, last)]
 
         return total_distance
