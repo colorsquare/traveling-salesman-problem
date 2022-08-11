@@ -86,9 +86,9 @@ class TSP:
         random.shuffle(route)
         return route
 
-    def update_route(self, new_route):
+    def update_route(self, new_route, new_total_distance):
         self.route = new_route
-        self.total_distance = self.calculate_total_distance(self.route)
+        self.total_distance = new_total_distance
 
     def calculate_total_distance(self, route):
         """Add all distances that salesman will travel.
