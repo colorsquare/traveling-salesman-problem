@@ -56,10 +56,13 @@ def main():
     print(f"Solving '{data}.tsp' with '{solver.__name__}'..")
     time.sleep(0.3)
 
-    best_path = solver(tsp)
-    s = "\n".join([str(city_index + 1) for city_index in best_path])
+    solver(tsp)
+    best_route, best_distance = tsp.route, tsp.total_distance
+    s = "\n".join([str(city_index + 1) for city_index in best_route])
     with open("solution.csv", "w", encoding="utf-8") as f:
         f.write(s)
+
+    print(f"\nShortest distance found: {best_distance}\nRoute saved to 'solution.csv'.")
 
 
 if __name__ == "__main__":
