@@ -49,6 +49,16 @@ def genetic_algorithm(tsp):
         return first_generation
 
     def create_child_generation(parent_generation):
+
+        # Among various genetic operations, we chose as follows.
+        # Before we begin, to not lose the best performing routes, we keep the top 10% or at least
+        # one parent, that presents shortest distance. It's called 'elitism'.
+
+        # For the rest, the probabilites for each operations shows the likelihood to be selected
+        # when creating a child. Crossover takes 60%, mutation 30%, and random 10%.
+        # For mutation, we propose three different kind, point mutation (switch neighbouring two),
+        # random mutation (switch random two), and permutation (slice and shuffle sublist).
+
         return parent_generation
 
     parent_generation = create_first_generation()
