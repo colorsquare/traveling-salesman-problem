@@ -62,53 +62,37 @@ def genetic_algorithm(tsp):
         # random mutation (switch random two), and permutation (slice and shuffle sublist).
 
         def crossover():
-            print("crossover")
             parent1 = random.choice(parent_generation)[0]
             parent2 = random.choice(parent_generation)[0]
-            print(parent1, parent2)
             i, j = random.randrange(len(parent1)), random.randrange(len(parent1))
-            print(f"i, j: {i}, {j}")
             # slice random presentation from a parent,
             # and fill the rest with the order of another parent
             child1 = parent1[min(i, j) : max(i, j) + 1]
             child2 = [gene for gene in parent2 if gene not in child1]
-            print(child1 + child2)
             return child1 + child2
 
         def point_mutation():
-            print("point mutation")
             child = random.choice(parent_generation)[0]
-            print(child)
             point = random.randrange(len(child))
-            print(f"point: {point}")
             if point == len(child) - 1:
                 child[0], child[-1] = child[-1], child[0]
             else:
                 child[point], child[point + 1] = child[point + 1], child[point]
-            print(child)
             return child
 
         def random_mutation():
-            print("random mutation")
             child = random.choice(parent_generation)[0]
-            print(child)
             i, j = random.randrange(len(child)), random.randrange(len(child))
-            print(f"i, j: {i}, {j}")
             child[i], child[j] = child[j], child[i]
-            print(child)
             return child
 
         def permute_mutation():
-            print("permute mutation")
             child = random.choice(parent_generation)[0]
-            print(child)
             i, j = random.randrange(len(child)), random.randrange(len(child))
-            print(f"i, j: {i}, {j}")
             i, j = min(i, j), max(i, j) + 1
             permutation = child[i:j]
             random.shuffle(permutation)
             child[i:j] = permutation
-            print(child)
             return child
 
         population = len(parent_generation)
