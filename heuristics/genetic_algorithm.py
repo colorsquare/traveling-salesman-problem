@@ -66,7 +66,6 @@ def genetic_algorithm(tsp):
     no_evolution_count = 0
     while no_evolution_count < 3:
         child_generation = create_child_generation(parent_generation)
-        print(child_generation)
         no_evolution_count = (
             0
             if child_generation[0][1] < parent_generation[0][1]
