@@ -4,6 +4,8 @@ Genetic Algorithm (GA)
 Heuristic approach imitating biological evolution in nature.
 """
 
+import random
+
 
 def insertion_sort(generation, elem):
     """Insert a new element to a generation.
@@ -59,7 +61,81 @@ def genetic_algorithm(tsp):
         # For mutation, we propose three different kind, point mutation (switch neighbouring two),
         # random mutation (switch random two), and permutation (slice and shuffle sublist).
 
-        return parent_generation
+        def crossover():
+            print("crossover")
+            parent1 = random.choice(parent_generation)[0]
+            parent2 = random.choice(parent_generation)[0]
+            print(parent1, parent2)
+            i, j = random.randrange(len(parent1)), random.randrange(len(parent1))
+            print(f"i, j: {i}, {j}")
+            # slice random presentation from a parent,
+            # and fill the rest with the order of another parent
+            child1 = parent1[min(i, j) : max(i, j) + 1]
+            child2 = [gene for gene in parent2 if gene not in child1]
+            print(child1 + child2)
+            return child1 + child2
+
+        def point_mutation():
+            print("point mutation")
+            child = random.choice(parent_generation)[0]
+            print(child)
+            point = random.randrange(len(child))
+            print(f"point: {point}")
+            if point == len(child) - 1:
+                child[0], child[-1] = child[-1], child[0]
+            else:
+                child[point], child[point + 1] = child[point + 1], child[point]
+            print(child)
+            return child
+
+        def random_mutation():
+            print("random mutation")
+            child = random.choice(parent_generation)[0]
+            print(child)
+            i, j = random.randrange(len(child)), random.randrange(len(child))
+            print(f"i, j: {i}, {j}")
+            child[i], child[j] = child[j], child[i]
+            print(child)
+            return child
+
+        def permute_mutation():
+            print("permute mutation")
+            child = random.choice(parent_generation)[0]
+            print(child)
+            i, j = random.randrange(len(child)), random.randrange(len(child))
+            print(f"i, j: {i}, {j}")
+            i, j = min(i, j), max(i, j) + 1
+            permutation = child[i:j]
+            random.shuffle(permutation)
+            child[i:j] = permutation
+            print(child)
+            return child
+
+        population = len(parent_generation)
+        number_of_children = population // 10
+        if number_of_children == 0:
+            number_of_children = 1
+        child_generation = parent_generation[:number_of_children]
+
+        while len(child_generation) < population:
+            rand = random.random()
+            if rand < 0.6:
+                child = crossover()
+            elif rand < 0.7:
+                child = point_mutation()
+            elif rand < 0.8:
+                child = random_mutation()
+            elif rand < 0.9:
+                child = permute_mutation()
+            else:
+                child = tsp.create_random_route()
+
+            insertion_sort(
+                child_generation, (child, tsp.calculate_total_distance(child))
+            )
+            number_of_children += 1
+
+        return child_generation
 
     parent_generation = create_first_generation()
 
