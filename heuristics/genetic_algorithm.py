@@ -51,8 +51,16 @@ def genetic_algorithm(tsp):
         return first_generation
 
     def create_child_generation(parent_generation):
+        """Create next generation with genetic operations.
 
-        # Among various genetic operations, we chose as follows.
+        Args:
+            parent_generation (list[tuple[list[int], int]]): List of tuple elements,
+                (route, total_distance) of class TSP.
+
+        Returns:
+            child_generation (list[tuple[list[int], int]]): Next generation built,
+                with genetic operations (elitism, crossover, mutation, and random).
+        """
         # Before we begin, to not lose the best performing routes, we keep the top 10% or at least
         # one parent, that presents shortest distance. It's called 'elitism'.
 
