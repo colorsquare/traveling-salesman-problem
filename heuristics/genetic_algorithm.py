@@ -69,9 +69,16 @@ def genetic_algorithm(tsp):
         # For mutation, we propose three different kind, point mutation (switch neighbouring two),
         # random mutation (switch random two), and permutation (slice and shuffle sublist).
 
+        def choose_parent():
+            n = int(len(parent_generation) * 0.2)
+            rand = random.random()
+            return random.choice(
+                parent_generation[:n] if rand < 0.8 else parent_generation[n:]
+            )[0]
+
         def crossover():
-            parent1 = random.choice(parent_generation)[0]
-            parent2 = random.choice(parent_generation)[0]
+            parent1 = choose_parent()
+            parent2 = choose_parent()
             i, j = random.randrange(len(parent1)), random.randrange(len(parent1))
             # slice random presentation from a parent,
             # and fill the rest with the order of another parent
@@ -80,7 +87,7 @@ def genetic_algorithm(tsp):
             return child1 + child2
 
         def point_mutation():
-            child = random.choice(parent_generation)[0]
+            child = choose_parent()
             point = random.randrange(len(child))
             if point == len(child) - 1:
                 child[0], child[-1] = child[-1], child[0]
@@ -89,13 +96,13 @@ def genetic_algorithm(tsp):
             return child
 
         def random_mutation():
-            child = random.choice(parent_generation)[0]
+            child = choose_parent()
             i, j = random.randrange(len(child)), random.randrange(len(child))
             child[i], child[j] = child[j], child[i]
             return child
 
         def permute_mutation():
-            child = random.choice(parent_generation)[0]
+            child = choose_parent()
             i, j = random.randrange(len(child)), random.randrange(len(child))
             i, j = min(i, j), max(i, j) + 1
             permutation = child[i:j]
@@ -132,7 +139,7 @@ def genetic_algorithm(tsp):
     parent_generation = create_first_generation()
 
     no_evolution_count = 0
-    while no_evolution_count < 3:
+    while no_evolution_count < len(parent_generation):
         child_generation = create_child_generation(parent_generation)
         no_evolution_count = (
             0
