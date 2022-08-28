@@ -42,7 +42,7 @@ def genetic_algorithm(tsp):
     def create_first_generation():
         first_generation = []
 
-        population = len(tsp.distances)
+        population = max(3, len(tsp.distances) // 10)
         for _ in range(population):
             new_route = tsp.create_random_route()
             new_total_distance = tsp.calculate_total_distance(new_route)
@@ -70,7 +70,7 @@ def genetic_algorithm(tsp):
         # random mutation (switch random two), and permutation (slice and shuffle sublist).
 
         def choose_parent():
-            n = int(len(parent_generation) * 0.2)
+            n = max(1, int(len(parent_generation) * 0.2))
             rand = random.random()
             return random.choice(
                 parent_generation[:n] if rand < 0.8 else parent_generation[n:]
@@ -111,9 +111,7 @@ def genetic_algorithm(tsp):
             return child
 
         population = len(parent_generation)
-        number_of_children = population // 10
-        if number_of_children == 0:
-            number_of_children = 1
+        number_of_children = max(1, population // 10)
         child_generation = parent_generation[:number_of_children]
 
         while len(child_generation) < population:
@@ -139,7 +137,7 @@ def genetic_algorithm(tsp):
     parent_generation = create_first_generation()
 
     no_evolution_count = 0
-    while no_evolution_count < len(parent_generation):
+    while no_evolution_count < max(3, len(parent_generation) // 10):
         child_generation = create_child_generation(parent_generation)
         no_evolution_count = (
             0
