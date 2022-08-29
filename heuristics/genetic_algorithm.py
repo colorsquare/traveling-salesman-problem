@@ -2,6 +2,39 @@
 Genetic Algorithm (GA)
 
 Heuristic approach imitating biological evolution in nature.
+
+Before we begin, to not lose the best performing routes, we keep the top 10% or at least
+one parent, that presents shortest distance. It's called 'elitism'.
+
+For the rest, the probabilites for each operations shows the likelihood to be selected
+when creating a child. Exploitation takes 90%, mutation 10%.
+
+On exploitation, we propose untie (remove 'X' crossroads), point switch (resolve zigzag),
+greedy point (relocate to nearest).
+(Point switch is a part of 'untie', but added to focus on resolving zigzags)
+
+A     D         A ---- D
+  \ /
+  / \      =>
+B     C         B ---- C
+
+A     D         A ---- D
+|   / |              /
+|  /  |    =>      /
+| /   |           /
+B     C         B ---- C
+
+A              D        A ------------ D
+| \          / |        |              |
+|   \       |  |        |              |
+|     \     |  |        |              |
+|       \  /   |   =>   |              |
+|         E    |        |          E   |
+|              |        |        /   \ |
+B ------------ C        B ------       C
+
+On mutation, we propose random switch (exchange random two cities), and greedy sublist
+(reorder cluster, 'E' above can be a cluster).
 """
 
 import random
@@ -61,13 +94,6 @@ def genetic_algorithm(tsp):
             child_generation (list[tuple[list[int], int]]): Next generation built,
                 with genetic operations (elitism, crossover, mutation, and random).
         """
-        # Before we begin, to not lose the best performing routes, we keep the top 10% or at least
-        # one parent, that presents shortest distance. It's called 'elitism'.
-
-        # For the rest, the probabilites for each operations shows the likelihood to be selected
-        # when creating a child. Crossover takes 60%, mutation 30%, and random 10%.
-        # For mutation, we propose three different kind, point mutation (switch neighbouring two),
-        # random mutation (switch random two), and permutation (slice and shuffle sublist).
 
         def choose_parent():
             n = max(1, int(len(parent_generation) * 0.2))

@@ -1,4 +1,5 @@
 [MESSAGES CONTROL]
 
 disable=invalid-name,
-        missing-function-docstring
+        missing-function-docstring,
+        anomalous-backslash-in-string
