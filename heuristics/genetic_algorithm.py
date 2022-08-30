@@ -137,8 +137,8 @@ def genetic_algorithm(tsp):
             return child
 
         population = len(parent_generation)
-        number_of_children = max(1, population // 10)
-        child_generation = parent_generation[:number_of_children]
+        num_of_elites = max(1, population // 10)
+        child_generation = parent_generation[:num_of_elites]
 
         while len(child_generation) < population:
             rand = random.random()
@@ -156,7 +156,6 @@ def genetic_algorithm(tsp):
             insertion_sort(
                 child_generation, (child, tsp.calculate_total_distance(child))
             )
-            number_of_children += 1
 
         return child_generation
 
