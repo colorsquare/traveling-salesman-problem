@@ -122,38 +122,10 @@ def genetic_algorithm(tsp):
                     child[i : j + 1] = child[i : j + 1][::-1]
             return child, child_distance
 
-        def crossover():
-            parent1 = choose_parent()
-            parent2 = choose_parent()
-            i, j = random.randrange(len(parent1)), random.randrange(len(parent1))
-            # slice random presentation from a parent,
-            # and fill the rest with the order of another parent
-            child1 = parent1[min(i, j) : max(i, j) + 1]
-            child2 = [gene for gene in parent2 if gene not in child1]
-            return child1 + child2
-
-        def point_mutation():
-            child = choose_parent()
-            point = random.randrange(len(child))
-            if point == len(child) - 1:
-                child[0], child[-1] = child[-1], child[0]
-            else:
-                child[point], child[point + 1] = child[point + 1], child[point]
-            return child
-
         def random_switch():
             child = choose_parent()
             i, j = random.randrange(len(child)), random.randrange(len(child))
             child[i], child[j] = child[j], child[i]
-            return child
-
-        def permute_mutation():
-            child = choose_parent()
-            i, j = random.randrange(len(child)), random.randrange(len(child))
-            i, j = min(i, j), max(i, j) + 1
-            permutation = child[i:j]
-            random.shuffle(permutation)
-            child[i:j] = permutation
             return child
 
         population = len(parent_generation)
