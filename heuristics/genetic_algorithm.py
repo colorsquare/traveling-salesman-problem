@@ -144,6 +144,44 @@ def genetic_algorithm(tsp):
                     child[i : j + 1] = child[i : j + 1][::-1]
             return child, child_distance
 
+        def greedy_point():
+            parent = choose_parent()
+            parent_distance = tsp.calculate_total_distance(parent)
+            i = random.randrange(len(parent))
+
+            city = parent[i]
+            curr_nearest_city = 0 if city != 0 else 1
+            curr_min_distance = (
+                tsp.distances[city][curr_nearest_city]
+                if city != 0
+                else tsp.distances[curr_nearest_city][city]
+            )
+            for neighbour in range(len(tsp.locations)):
+                if neighbour == city:
+                    continue
+                d = tsp.distances[max(city, neighbour)][min(city, neighbour)]
+                if d < curr_min_distance:
+                    curr_min_distance = d
+                    curr_nearest_city = neighbour
+
+            j = parent.index(neighbour)
+            child1, child2 = parent[:], parent[:]
+            child1.pop(i)
+            child2.pop(i)
+            child1.insert(j, city)
+            child2.insert(j + 1, city)
+            child1_distance, child2_distance = tsp.calculate_total_distance(
+                child1
+            ), tsp.calculate_total_distance(child2)
+
+            child, child_distance = parent, parent_distance
+            if child1_distance < child_distance:
+                child, child_distance = child1, child1_distance
+            if child2_distance < child_distance:
+                child, child_distance = child2, child2_distance
+
+            return child, child_distance
+
         def random_switch():
             child = choose_parent()[:]
             i, j = random.randrange(len(child)), random.randrange(len(child))
@@ -158,8 +196,10 @@ def genetic_algorithm(tsp):
             rand = random.random()
             if rand < 0.8:
                 child, child_distance = untie()
-            elif rand < 0.9:
+            elif rand < 0.85:
                 child, child_distance = point_switch()
+            elif rand < 0.9:
+                child, child_distance = greedy_point()
             else:
                 child = random_switch()
                 child_distance = tsp.calculate_total_distance(child)
