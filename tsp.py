@@ -69,11 +69,10 @@ class TSP:
                     self.locations[i][0] - self.locations[j][0],
                     self.locations[i][1] - self.locations[j][1],
                 )
-                for j in range(i)
+                for j in range(i + 1)
             ]
             for i in range(len(self.locations))
         ]
-
         return distances
 
     def create_random_route(self):

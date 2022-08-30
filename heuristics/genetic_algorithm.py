@@ -102,6 +102,26 @@ def genetic_algorithm(tsp):
                 parent_generation[:n] if rand < 0.8 else parent_generation[n:]
             )[0]
 
+        def untie():
+            parent = choose_parent()
+            parent_distance = tsp.calculate_total_distance(parent)
+            child, child_distance = parent[:], parent_distance
+            n = max(3, len(parent_generation) // 10)
+            for _ in range(n):
+                i, j = random.randrange(len(child)), random.randrange(len(child))
+                i, j = min(i, j), max(i, j)
+                ll, lr = child[i - 1] if i >= 1 else child[-1], child[i]
+                rl, rr = child[j], child[j + 1] if j < len(child) - 1 else child[0]
+                if (
+                    tsp.distances[max(ll, rl)][min(ll, rl)]
+                    + tsp.distances[max(lr, rr)][min(lr, rr)]
+                ) < (
+                    tsp.distances[max(ll, lr)][min(ll, lr)]
+                    + tsp.distances[max(rl, rr)][min(rl, rr)]
+                ):
+                    child[i : j + 1] = child[i : j + 1][::-1]
+            return child, child_distance
+
         def crossover():
             parent1 = choose_parent()
             parent2 = choose_parent()
@@ -121,7 +141,7 @@ def genetic_algorithm(tsp):
                 child[point], child[point + 1] = child[point + 1], child[point]
             return child
 
-        def random_mutation():
+        def random_switch():
             child = choose_parent()
             i, j = random.randrange(len(child)), random.randrange(len(child))
             child[i], child[j] = child[j], child[i]
@@ -142,20 +162,12 @@ def genetic_algorithm(tsp):
 
         while len(child_generation) < population:
             rand = random.random()
-            if rand < 0.6:
-                child = crossover()
-            elif rand < 0.7:
-                child = point_mutation()
-            elif rand < 0.8:
-                child = random_mutation()
-            elif rand < 0.9:
-                child = permute_mutation()
+            if rand < 0.9:
+                child, child_distance = untie()
             else:
-                child = tsp.create_random_route()
-
-            insertion_sort(
-                child_generation, (child, tsp.calculate_total_distance(child))
-            )
+                child = random_switch()
+                child_distance = tsp.calculate_total_distance(child)
+            insertion_sort(child_generation, (child, child_distance))
 
         return child_generation
 
