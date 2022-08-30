@@ -145,7 +145,7 @@ def genetic_algorithm(tsp):
     parent_generation = create_first_generation()
 
     no_evolution_count = 0
-    while no_evolution_count < max(3, len(parent_generation) // 10):
+    while no_evolution_count < len(parent_generation):
         child_generation = create_child_generation(parent_generation)
         no_evolution_count = (
             0
