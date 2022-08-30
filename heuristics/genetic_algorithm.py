@@ -121,6 +121,29 @@ def genetic_algorithm(tsp):
                     child[i : j + 1] = child[i : j + 1][::-1]
             return child, child_distance
 
+        def point_switch():
+            parent = choose_parent()
+            parent_distance = tsp.calculate_total_distance(parent)
+            child, child_distance = parent[:], parent_distance
+            for _ in range(len(parent_generation) * 10):
+                point = random.randrange(len(child))
+                i, j = (
+                    (point, point + 1)
+                    if point < len(child) - 1
+                    else (len(child) - 1, 0)
+                )
+                ll, lr = child[i - 1] if i >= 1 else child[-1], child[i]
+                rl, rr = child[j], child[j + 1] if j < len(child) - 1 else child[0]
+                if (
+                    tsp.distances[max(ll, rl)][min(ll, rl)]
+                    + tsp.distances[max(lr, rr)][min(lr, rr)]
+                ) < (
+                    tsp.distances[max(ll, lr)][min(ll, lr)]
+                    + tsp.distances[max(rl, rr)][min(rl, rr)]
+                ):
+                    child[i : j + 1] = child[i : j + 1][::-1]
+            return child, child_distance
+
         def random_switch():
             child = choose_parent()[:]
             i, j = random.randrange(len(child)), random.randrange(len(child))
@@ -133,8 +156,10 @@ def genetic_algorithm(tsp):
 
         while len(child_generation) < population:
             rand = random.random()
-            if rand < 0.9:
+            if rand < 0.8:
                 child, child_distance = untie()
+            elif rand < 0.9:
+                child, child_distance = point_switch()
             else:
                 child = random_switch()
                 child_distance = tsp.calculate_total_distance(child)
