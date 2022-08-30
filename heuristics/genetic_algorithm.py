@@ -122,7 +122,7 @@ def genetic_algorithm(tsp):
             return child, child_distance
 
         def random_switch():
-            child = choose_parent()
+            child = choose_parent()[:]
             i, j = random.randrange(len(child)), random.randrange(len(child))
             child[i], child[j] = child[j], child[i]
             return child
