@@ -7,7 +7,7 @@ Before we begin, to not lose the best performing routes, we keep the top 10% or 
 one parent, that presents shortest distance. It's called 'elitism'.
 
 For the rest, the probabilites for each operations shows the likelihood to be selected
-when creating a child. Exploitation takes 90%, mutation 10%.
+when creating a child. Exploitation takes 95%, mutation 5%.
 
 On exploitation, we propose untie (remove 'X' crossroads), point switch (resolve zigzag),
 greedy point (relocate to nearest).
@@ -194,11 +194,11 @@ def genetic_algorithm(tsp):
 
         while len(child_generation) < population:
             rand = random.random()
-            if rand < 0.8:
+            if rand < 0.85:
                 child, child_distance = untie()
-            elif rand < 0.85:
-                child, child_distance = point_switch()
             elif rand < 0.9:
+                child, child_distance = point_switch()
+            elif rand < 0.95:
                 child, child_distance = greedy_point()
             else:
                 child = random_switch()
