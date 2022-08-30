@@ -107,7 +107,7 @@ def genetic_algorithm(tsp):
             parent_distance = tsp.calculate_total_distance(parent)
             child, child_distance = parent[:], parent_distance
             for _ in range(len(parent_generation) * 10):
-                i, j = random.randrange(len(child)), random.randrange(len(child))
+                i, j = random.sample(range(len(child)), k=2)
                 i, j = min(i, j), max(i, j)
                 ll, lr = child[i - 1] if i >= 1 else child[-1], child[i]
                 rl, rr = child[j], child[j + 1] if j < len(child) - 1 else child[0]
