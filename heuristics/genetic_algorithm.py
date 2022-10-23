@@ -219,4 +219,5 @@ def genetic_algorithm(tsp):
         )
         parent_generation = child_generation
 
-    tsp.update_route(child_generation[0][0], child_generation[0][1])
+    tsp.route = child_generation[0][0]
+    tsp.total_distance = child_generation[0][1]
