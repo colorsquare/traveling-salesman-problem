@@ -11,10 +11,12 @@ import argparse
 from tsp import TSP
 from heuristics.genetic_algorithm import genetic_algorithm
 from heuristics.greedy_search import greedy_search
+from heuristics.two_opt import two_opt
 
 METHODS = {
     "ga": genetic_algorithm,
     "greedy": greedy_search,
+    "2opt": two_opt,
 }
 
 
@@ -30,7 +32,7 @@ def main():
         "method",
         nargs="?",  # number of arguments, ? is 0 or 1 in regex.
         default="ga",
-        help="Use abbreviations for methods. { 'ga': genetic-algorithm, 'greedy': greedy-search }",
+        help="Use abbreviations for methods. { 'ga': genetic-algorithm, 'greedy': greedy-search, '2opt': 2-opt }",
     )
     parser.add_argument(
         "data",
